@@ -1,10 +1,15 @@
-import { src, dest, watch, series } from "gulp";
+import { src, dest, watch, series, parallel } from "gulp";
 import gulpSass from "gulp-sass"
 import cssnano from "gulp-cssnano";
 import * as saasModule from "sass"
 import sourcemaps from "gulp-sourcemaps";
 import browserSyncModule from 'browser-sync'
 import fileInclude from "gulp-file-include";
+import rename from "gulp-rename";
+import concat from "gulp-concat";
+import uglify from "gulp-uglify";
+import imagemin from "gulp-imagemin";
+
 
 const sass = gulpSass(saasModule);
 const browserSync = browserSyncModule.create();
@@ -46,4 +51,38 @@ function images(){
           .pipe(imagemin())
           .pipe(dest('dist/images'));
 }
+
+function serve() {
+  browserSync.init({
+    server: {
+      baseDir: "./dist"
+    },
+    notify: false
+  });
+}
+
+function reload(done) {
+  browserSync.reload();
+  done();
+}
+
+function watcher(){
+  serve();
+  watch("src/scss/**/*.scss", series(styles, reload));
+  watch("src/*.html", parallel(html));
+  watch("src/js/**/*.js", series(scripts, reload));
+  watch("src/images/**/*", series(images, reload));
+}
+
+const seriesModule = series(
+  html,
+  styles,
+  scripts,
+  images,
+  serve,
+  watcher
+);
+
+export default seriesModule;
+
 
