@@ -6,23 +6,23 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #e8e8e8;
     color: #333;
     line-height: 1.6;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 20px auto;
     background-color: white;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 /* Header Styles */
 .header {
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-    padding: 40px;
-    border-bottom: 3px solid #ff5722;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-bottom: none;
 }
 
 .profile-section {
@@ -38,10 +38,10 @@ body {
 .profile-image img {
     width: 150px;
     height: 150px;
-    border-radius: 15px;
+    border-radius: 8px;
     object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: none;
+    box-shadow: none;
 }
 
 .profile-info {
@@ -49,9 +49,9 @@ body {
 }
 
 .name {
-    font-size: 2.5em;
+    font-size: 2.2em;
     font-weight: 300;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #333;
 }
 
@@ -61,51 +61,53 @@ body {
 }
 
 .subtitle {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #666;
     font-weight: 300;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
 /* Main Content */
 .main-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 200px);
+    min-height: auto;
 }
 
 .left-column {
-    padding: 40px;
+    padding: 30px 40px;
     background-color: #fff;
 }
 
 .right-column {
-    padding: 40px;
-    background-color: #f9f9f9;
+    padding: 30px 40px;
+    background-color: #f5f5f5;
     border-left: 1px solid #eee;
 }
 
 /* Section Titles */
 .section-title {
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #333;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 3px solid #ff5722;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #ff5722;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .section-title i {
     color: #ff5722;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 /* About Section */
 .about-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .about-text {
@@ -117,7 +119,7 @@ body {
 
 /* Contact Section */
 .contact-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .contact-title {
@@ -128,32 +130,35 @@ body {
 .contact-items {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 25px;
+    align-items: center;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     color: #666;
-    font-size: 0.9em;
+    font-size: 0.8em;
+    white-space: nowrap;
 }
 
 .contact-item i {
     color: #ff5722;
-    width: 20px;
+    width: 16px;
     text-align: center;
+    font-size: 0.9em;
 }
 
 /* Work Experience Section */
 .work-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .work-item {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
 }
 
 .work-item::before {
@@ -161,10 +166,10 @@ body {
     position: absolute;
     left: 0;
     top: 5px;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: #ff5722;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .work-header {
@@ -175,9 +180,10 @@ body {
 }
 
 .job-title {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #333;
+    text-transform: uppercase;
 }
 
 .job-date {
@@ -200,13 +206,13 @@ body {
 
 /* Awards Section */
 .awards-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .award-item {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
 }
 
 .award-item::before {
@@ -214,17 +220,18 @@ body {
     position: absolute;
     left: 0;
     top: 5px;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: #ff5722;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .award-title {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #333;
     margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .award-company {
@@ -246,13 +253,13 @@ body {
 
 /* Education Section */
 .education-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .education-item {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
 }
 
 .education-item::before {
@@ -260,17 +267,18 @@ body {
     position: absolute;
     left: 0;
     top: 5px;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: #ff5722;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .degree-title {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #333;
     margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .university {
@@ -292,13 +300,13 @@ body {
 
 /* References Section */
 .references-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .reference-item {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 18px;
 }
 
 .reference-item::before {
@@ -306,17 +314,18 @@ body {
     position: absolute;
     left: 0;
     top: 5px;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: #ff5722;
-    border-radius: 50%;
+    border-radius: 0;
 }
 
 .reference-name {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #333;
     margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .reference-address {
@@ -333,45 +342,45 @@ body {
 
 /* Skills Section */
 .skills-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .skill-item {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .skill-name {
     display: block;
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 600;
 }
 
 .skill-bar {
     width: 100%;
-    height: 8px;
-    background-color: #e0e0e0;
-    border-radius: 4px;
+    height: 6px;
+    background-color: #e8e8e8;
+    border-radius: 3px;
     overflow: hidden;
 }
 
 .skill-progress {
     height: 100%;
     background-color: #ff5722;
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 0.3s ease;
 }
 
 /* Languages Section */
 .languages-section {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .languages-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 25px;
 }
 
 .language-item {
@@ -382,20 +391,20 @@ body {
 }
 
 .language-circle {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    border: 4px solid #ff5722;
+    border: 3px solid #ff5722;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     position: relative;
     background-color: white;
 }
 
 .language-percent {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     color: #ff5722;
 }
@@ -407,13 +416,13 @@ body {
 }
 
 .language-name {
-    font-size: 0.9em;
+    font-size: 0.85em;
     font-weight: 600;
     color: #333;
 }
 
 .language-level {
-    font-size: 0.8em;
+    font-size: 0.75em;
     color: #666;
 }
 
