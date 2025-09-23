@@ -29,8 +29,7 @@ function html() {
 function styles() {
     return src("app/scss/**/*.scss")   
         .pipe(sourcemaps.init())         
-        .pipe(sass().on("error", sass.logError)) 
-        .pipe(dest("dist/css"))         
+        .pipe(sass().on("error", sass.logError))       
         .pipe(cssnano())                 
         .pipe(rename({ suffix: ".min" })) 
         .pipe(sourcemaps.write("."))     
@@ -55,34 +54,33 @@ function images(){
 function serve() {
   browserSync.init({
     server: {
-      baseDir: "./dist"
+      baseDir: "./app"
     },
     notify: false
   });
 }
 
-function reload(done) {
+function reload() {
   browserSync.reload();
-  done();
+  
 }
 
 function watcher(){
   serve();
-  watch("src/scss/**/*.scss", series(styles, reload));
-  watch("src/*.html", parallel(html));
-  watch("src/js/**/*.js", series(scripts, reload));
-  watch("src/images/**/*", series(images, reload));
+  watch("./app/scss/**/*.scss", {events: "change"}, reload)
+  watch("./app/*.html", {events: "change"}, reload).addListener("change", reload)
+  watch("./app/js/**/*.js", {events: "change"}, reload).addListener("change", reload)
+//   watch("./app/images/**/*", series(images, reload));
 }
+
 
 const seriesModule = series(
   html,
   styles,
   scripts,
   images,
-  serve,
   watcher
 );
-
 export default seriesModule;
 
 
