@@ -53,7 +53,7 @@ function images(){
 
 function serve() {
   browserSync.init({
-    server: {
+    server:
       baseDir: "./app"
     },
     notify: false
@@ -62,7 +62,6 @@ function serve() {
 
 function reload() {
   browserSync.reload();
-  
 }
 
 function watcher(){
@@ -72,8 +71,6 @@ function watcher(){
   watch("./app/js/**/*.js", {events: "change"}, reload).addListener("change", reload)
 //   watch("./app/images/**/*", series(images, reload));
 }
-
-
 const seriesModule = series(
   html,
   styles,
@@ -81,6 +78,7 @@ const seriesModule = series(
   images,
   watcher
 );
+
 export default seriesModule;
 
 
