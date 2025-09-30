@@ -54,7 +54,7 @@ function images(){
 function serve() {
   browserSync.init({
     server: {
-      baseDir: "./app"
+      baseDir: "./dist"
     },
     notify: false
   });
