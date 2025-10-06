@@ -31,7 +31,6 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-/* Gray background only for name section */
 .name-section {
     background: #f8f8f8;
     padding: 20px;
@@ -101,5 +100,53 @@ body {
     letter-spacing: 0.5px;
     font-weight: 400;
     margin-bottom: 20px;
+}
+
+/* About Section */
+.header-section .about-section {
+    padding: 0;
+    border: none;
+}
+
+.header-section .section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-section .section-icon {
+    background-color: #ff6b35;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 3px;
+    margin-right: 12px;
+    font-size: 0.9rem;
+}
+
+.header-section .section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+    position: relative;
+    flex: 1;
+}
+
+.header-section .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ff6b35;
+}
+
+.header-section .about-section p {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    text-align: justify;
 }
 
