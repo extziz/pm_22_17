@@ -18,7 +18,7 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     background-color: white;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     padding: 0;
 }
 
@@ -225,4 +225,21 @@ body {
     text-align: center;
 }
 
+/* Three Column Section */
+.three-column-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    padding: 25px 0;
+    background: repeating-linear-gradient(90deg,
+            white 0%,
+            white 33.33%,
+            white 33.33%,
+            white 66.66%,
+            white 66.66%,
+            white 100%);
+}
 
+.column {
+    padding: 0 30px;
+}
