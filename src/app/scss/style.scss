@@ -22,7 +22,6 @@ body {
     padding-top: 20px;
 }
 
-/* Header Section */
 .header-section {
     background: white;
     padding: 30px 40px;
@@ -32,7 +31,6 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-/* Gray background only for name section */
 .name-section {
     background: #ebebeb;
     padding: 20px 40px 1px;
@@ -119,16 +117,15 @@ body {
     text-align: center;
 }
 
-/* Main Content */
 .main-content {
     padding: 0;
 }
 
-/* About Section in Header */
 .header-section .about-section {
     padding: 0;
     border: none;
     margin-top: 15px;
+    position: relative;
 }
 
 .header-section .section-header {
@@ -138,10 +135,35 @@ body {
     background-color: #ebebeb; 
     border-radius: 10px;   
     padding: 5px 10px;
+    position: relative; 
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 1px;
+        background-color: #dbdbdb;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 100%;
+        margin-right: 5px;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #dbdbdb;
+        top: 50%;
+        right: calc(100% + 5px); 
+        transform: translate(50%, -50%); 
+    }
 }
 
 .header-section .section-icon {
-    background-color: #ff6b35;
+    background-color: #ff4400;
     color: white;
     padding: 5px 5px;
     border-radius: 3px;
@@ -152,7 +174,7 @@ body {
 .header-section .section-title {
     font-size: 1rem;
     font-weight: 1000;
-    color: #333;
+    color: black;
     letter-spacing: 0.1px;
     position: relative;
     flex: none;
@@ -163,15 +185,50 @@ body {
     display: none;
 }
 
-.header-section .about-section p {
-    color: #666;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-bottom: 12px;
-    text-align: justify;
+.header-section .about-section::after { 
+    content: '';
+    position: absolute;
+    top: 16px; 
+    left: 160px; 
+    right: 0; 
+    height: 3px;
+    background-color: #ff4400;
 }
 
-/* General section styling for columns */
+.header-section .about-section p {
+    font-family: "Montserrat", sans-serif;
+    color: black;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+    margin-bottom: 12px;
+    text-align: justify;
+    position: relative; 
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 1px;
+        background-color: #dbdbdb;
+        top: 0.6em;
+        right: 100%;
+        margin-right: 5px;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #dbdbdb;
+        top: 0.6em;
+        right: calc(100% + 5px); 
+        transform: translate(50%, -50%);
+    }
+}
+
 .section-header {
     display: flex;
     align-items: center;
@@ -179,7 +236,7 @@ body {
 }
 
 .section-icon {
-    background-color: #ff6b35;
+    background-color: #ff4400;
     color: white;
     padding: 6px 10px;
     border-radius: 3px;
@@ -188,47 +245,46 @@ body {
 }
 
 .section-icon.orange {
-    background-color: #ff6b35;
+    background-color: #ff4400;
 }
 
 .section-title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #333;
-    letter-spacing: 1px;
+    font-size: 1rem;
+    font-weight: 1000;
+    color: black;
+    letter-spacing: 0.1px;
     position: relative;
-    flex: 1;
+    flex: none;
+    top: 4px;
 }
 
 .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #ff6b35;
+    display: none;
 }
 
-/* Contact Section */
 .contact-section {
-    padding: 25px 40px;
-    border-bottom: 1px solid #e0e0e0;
-    background: #f8f8f8;
+    padding: 10px 40px;
+    background: #ebebeb;
     margin-bottom: 0;
+
+    display: flex;       
+    align-items: center; 
+    flex-wrap: wrap;     
+    gap: 100px;          
 }
 
 .contact-title {
-    color: #ff6b35;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+    color: #ff4400;
+    font-size: 1rem;
+    font-weight: 1000;
+    margin-bottom: 0; 
+    letter-spacing: 0.08px;
+    flex-shrink: 0; 
 }
 
 .contact-info {
     display: flex;
-    gap: 35px;
+    gap: 100px;
     flex-wrap: wrap;
 }
 
@@ -236,17 +292,16 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #666;
+    color: black;
     font-size: 0.8rem;
 }
 
 .contact-item i {
-    color: #ff6b35;
+    color: #ff4400;
     width: 14px;
     text-align: center;
 }
 
-/* Three Column Section */
 .three-column-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -267,7 +322,6 @@ body {
     padding: 0 30px;
 }
 
-/* Work Experience Items */
 .experience-item, .education-item, .award-item, .reference-item {
     margin-bottom: 20px;
     position: relative;
@@ -279,10 +333,10 @@ body {
     content: '';
     position: absolute;
     left: 0;
-    top: 5px;
-    width: 4px;
-    height: 4px;
-    background-color: #ff6b35;
+    top: 3px;
+    width: 8px;
+    height: 8px;
+    background-color: #ff4400;
     border-radius: 0;
     z-index: 2;
 }
@@ -290,10 +344,10 @@ body {
 .experience-item::after, .education-item::after, .award-item::after, .reference-item::after {
     content: '';
     position: absolute;
-    left: 1px;
+    left: 5px;
     top: 8px;
     bottom: -20px;
-    width: 1px;
+    width: 2px;
     background-color: #e8e8e8;
     z-index: 1;
 }
@@ -313,7 +367,7 @@ body {
 
 .date {
     font-size: 0.75rem;
-    color: #ff6b35;
+    color: #ff4400;
     font-weight: 600;
     display: block;
     margin-bottom: 5px;
@@ -331,7 +385,6 @@ body {
     line-height: 1.5;
 }
 
-/* Skills Section */
 .skill-item {
     margin-bottom: 15px;
     padding-bottom: 12px;
@@ -356,12 +409,11 @@ body {
 
 .progress-fill {
     height: 100%;
-    background-color: #ff6b35;
+    background-color: #ff4400;
     border-radius: 2px;
     transition: width 0.3s ease;
 }
 
-/* Languages Section */
 .languages-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -422,18 +474,21 @@ body {
     color: #666;
 }
 
-/* Section spacing */
 .column .section-header {
-    margin-top: 25px;
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 15px;
-    padding-bottom: 8px;
+    background-color: #ebebeb;
+    border-radius: 10px;
+    padding: 5px 10px;
+    position: relative;
+    margin-top: 25px;
 }
 
 .column .section-header:first-child {
     margin-top: 0;
 }
 
-/* Responsive Design */
 @media (max-width: 992px) {
     .three-column-section {
         grid-template-columns: 1fr 1fr;
