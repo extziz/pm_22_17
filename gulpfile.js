@@ -8,14 +8,14 @@ import fileInclude from "gulp-file-include";
 import rename from "gulp-rename";
 import concat from "gulp-concat";
 import uglify from "gulp-uglify";
-import imagemin from "gulp-imagemin";
+import sharp from "gulp-sharp-responsive";
 
 const sass = gulpSass(sassModule);
 const browserSync = browserSyncModule.create();
 
 // HTML
 function html() {
-  return src("app/*.html")
+  return src("src/app/*.html")
     .pipe(fileInclude({ prefix: "@@", basepath: "@file" }))
     .pipe(dest("dist"))
     .pipe(browserSync.stream());
@@ -23,7 +23,7 @@ function html() {
 
 // SCSS
 function styles() {
-  return src("app/scss/**/*.scss")
+  return src("src/app/scss/**/*.scss")
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
     .pipe(cssnano())
@@ -35,20 +35,29 @@ function styles() {
 
 // JS
 function scripts() {
-  return src("app/js/**/*.js")
+  return src("src/app/js/**/*.js")
     .pipe(concat("app.js"))
     .pipe(uglify())
     .pipe(dest("dist/js"))
     .pipe(browserSync.stream());
 }
 
-// Images
-function images() {
-  return src("app/img/**/*")
-    .pipe(imagemin())
-    .pipe(dest("dist/img"))
-    .pipe(browserSync.stream());
+export async function images(done) {
+  return src("src/app/imgs/**/*.{png,jpg,jpeg}", {encoding: false})
+    .pipe(dest("dist/imgs")) 
+    // .pipe(
+    //   sharp({
+    //     formats: [
+    //       { format: "jpeg", quality: 80 },
+    //       { format: "webp", quality: 80 }
+    //     ]
+    //   })
+    // )
+    // .pipe(dest("dist/imgs"))
+     .on("end", done)  
+    .on("error", done);
 }
+
 
 // BrowserSync
 function serve(done) {
@@ -61,10 +70,10 @@ function serve(done) {
 
 // Watcher
 function watcher() {
-  watch("app/scss/**/*.scss", styles);
-  watch("app/*.html", html);
-  watch("app/js/**/*.js", scripts);
-  watch("app/img/**/*", images);
+  watch("src/app/scss/**/*.scss", styles);
+  watch("src/app/*.html", html);
+  watch("src/app/js/**/*.js", scripts);
+  watch("src/app/imgs/**/*", images);
 }
 
 // Export tasks

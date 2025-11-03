@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +19,7 @@ body {
     margin: 0 auto;
     background-color: white;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    padding: 0;
+    padding-top: 20px;
 }
 
 /* Header Section */
@@ -33,18 +34,18 @@ body {
 
 /* Gray background only for name section */
 .name-section {
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    background: #ebebeb;
+    padding: 20px 40px 1px;
+    margin-bottom: 0px;
+    margin-top: 20px;
 }
 
 .profile-image {
     flex-shrink: 0;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    border-radius: 0px;
     position: relative;
     overflow: visible;
+    margin-top: 20px;
 }
 
 .profile-image img {
@@ -52,31 +53,36 @@ body {
     height: 140px;
     object-fit: cover;
     display: block;
-    border-radius: 6px;
+    border-radius: 10px;
 }
 
 .corner-decoration {
     position: absolute;
     width: 25px;
     height: 25px;
-    border: 3px solid #ff6b35;
+    border: 1.5px solid #b83100;
     z-index: 10;
 }
 
 .corner-decoration.top-left {
-    top: -10px;
-    left: -10px;
+    top: -6px;
+    left: -6px;
     border-right: none;
     border-bottom: none;
-    border-top-left-radius: 6px;
+    border-top-left-radius: 11px;
+    width: 40px;
+    height: 40px;
 }
 
 .corner-decoration.bottom-right {
-    bottom: -10px;
-    right: -10px;
+    bottom: -6px;
+    right: -6px;
     border-left: none;
-    border-top: none;
-    border-bottom-right-radius: 6px;
+    border-bottom-right-radius: 11px;
+    border-top-right-radius: 11px;
+    width: 12px;
+    height: 152px;
+    border-color: #dbdbdb;
 }
 
 .profile-info {
@@ -84,23 +90,33 @@ body {
 }
 
 .name-section h1 {
-    font-size: 2.2rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 3rem;
     font-weight: 300;
-    color: #333;
-    margin-bottom: 8px;
+    color: black;
+    margin-top: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.1em;
+    line-height: 0.5;
+    justify-content: center;
 }
-
+.name-section-p1 {
+    font-weight: 900;
+}
 .highlight {
-    color: #ff6b35;
-    font-weight: 700;
+    color: #ff4400;
+    font-weight: 900;
 }
 
 .subtitle {
+    font-family: "Montserrat", sans-serif;
     font-size: 1rem;
-    color: #666;
-    letter-spacing: 0.5px;
+    color: black;
+    letter-spacing: 8px;
     font-weight: 400;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 /* Main Content */
@@ -112,40 +128,39 @@ body {
 .header-section .about-section {
     padding: 0;
     border: none;
+    margin-top: 15px;
 }
 
 .header-section .section-header {
-    display: flex;
+    display: inline-flex; 
     align-items: center;
     margin-bottom: 15px;
+    background-color: #ebebeb; 
+    border-radius: 10px;   
+    padding: 5px 10px;
 }
 
 .header-section .section-icon {
     background-color: #ff6b35;
     color: white;
-    padding: 6px 10px;
+    padding: 5px 5px;
     border-radius: 3px;
     margin-right: 12px;
     font-size: 0.9rem;
 }
 
 .header-section .section-title {
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 1000;
     color: #333;
-    letter-spacing: 1px;
+    letter-spacing: 0.1px;
     position: relative;
-    flex: 1;
+    flex: none;
+    top: 4px;
 }
 
 .header-section .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #ff6b35;
+    display: none;
 }
 
 .header-section .about-section p {
