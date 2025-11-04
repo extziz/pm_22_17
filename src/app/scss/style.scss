@@ -12,11 +12,11 @@ body {
     color: #333;
     line-height: 1.4;
     margin: 0;
-    padding: 20px;
+    padding: 0px;
 }
 
 .resume-container {
-    max-width: 1000px;
+    max-width: 1500px;
     margin: 0 auto;
     background-color: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -267,14 +267,14 @@ body {
 }
 
 .contact-section {
-    padding: 10px 40px;
+    padding: 10px 45px;
     background: #ebebeb;
     margin-bottom: 0;
 
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 100px;
+    gap: 150px;
 }
 
 .contact-title {
@@ -288,7 +288,7 @@ body {
 
 .contact-info {
     display: flex;
-    gap: 100px;
+    gap: 150px;
     flex-wrap: wrap;
 }
 
@@ -332,12 +332,31 @@ body {
 //     margin-right: 50px;
 // }
 .three-column-section .column:last-child {
-    margin-left: 15px;
+    padding-left: 15px;
     padding-left: 0px;
     max-width: 200px;
 }
 .column {
     padding: 0 30px;
+    position: relative; 
+    overflow: hidden;
+}
+
+.column .section-header:has(.fa-briefcase) .section-title::after,
+.column .section-header:has(.fa-trophy) .section-title::after {
+    content: '';
+    display: block; /* Перебиваємо 'display: none' з оригінального стилю */
+    position: absolute;
+    background-color: #ff4400; /* Помаранчевий колір лінії */
+    height: 3px;               /* Товщина лінії */
+    width: 900px;             /* Робимо лінію дуже довгою */
+    
+    /* Позиціонуємо вертикально по центру заголовка */
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* Починаємо лінію через 10px після кінця тексту заголовка */
+    left: calc(100% + 40px);
 }
 
 .experience-item,
@@ -372,6 +391,90 @@ body {
 .reference-item::before {
     display: none;
 }
+
+/* --- Зміни для WORK EXPERIENCE (Розміщуємо дати біля заголовків) --- */
+
+/* 1. Змушуємо заголовок "обтікати" зліва */
+.experience-item h3 {
+    float: left;
+    margin-bottom: 0; /* Прибираємо відступ знизу, щоб дата піднялася */
+}
+
+/* 2. Змушуємо дату "обтікати" справа */
+.experience-item .date {
+    float: left;
+    display: inline-block; /* Перебиваємо 'display: block' із загального стилю */
+    margin-bottom: 5px; 
+    margin-left: 8px;   /* Залишаємо відступ знизу, як і був */
+}
+
+/* 3. Змушуємо назву компанії початися з нового рядка, "очистивши" обтікання */
+.experience-item .company {
+    clear: both;
+}
+/* --- Кінець змін --- */
+
+/* === ОНОВЛЕНИЙ БЛОК для EDUCATION та AWARDS (Виправлення порядку) === */
+/* Будь ласка, ЗАМІНІТЬ попередні правила для h3/date на ЦІ правила. */
+
+/* 1. Перетворюємо самі елементи на flex-контейнери */
+.education-item,
+.award-item {
+    display: flex;
+    flex-wrap: wrap;       // Дозволяє елементам переноситись на новий рядок
+    align-items: baseline; // Вирівнюємо h3 та дату по базовій лінії
+}
+
+/* 2. Прибираємо 'clear: both' з .university/.address, оскільки
+      ми більше не використовуємо 'float' для цих секцій. */
+.education-item .university,
+.education-item .address,
+.award-item .address {
+    clear: none; 
+}
+
+/* 3. Встановлюємо візуальний порядок (date = 2) */
+.education-item .date,
+.award-item .date {
+    color: black;
+    letter-spacing: 0;
+    order: 2;           // <--- Візуально буде другим
+    font-weight: 800;   // Робимо жирним
+    margin-left: 8px;   // Відступ від заголовка
+    
+    /* Прибираємо float, якщо він був */
+    float: none;
+    display: inline;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+/* 4. Встановлюємо візуальний порядок (h3 = 1) */
+.education-item h3,
+.award-item h3 {
+    order: 1;           // <--- Візуально буде першим
+    
+    /* Прибираємо float, якщо він був */
+    float: none;
+    margin-bottom: 0;
+}
+
+/* 5. Змушуємо наступні елементи переноситись на новий рядок */
+.education-item .university,
+.education-item .address,
+.award-item .address { /* (або .award-item .company тощо) */
+    order: 3;           // <--- Візуально буде третім
+    width: 100%;        // <--- Змушує елемент "впасти" на новий рядок
+    margin-top: 5px;    // Додаємо невеликий відступ зверху
+}
+
+/* 6. Опис (description) також має йти в кінці */
+.education-item .description,
+.award-item .description {
+    order: 4;           // <--- Візуально буде останнім
+    width: 100%;
+}
+/* --- Кінець оновленого блоку --- */
 
 .experience-item::after,
 .education-item::after,
@@ -416,9 +519,9 @@ body {
 }
 
 .date {
-    font-size: 0.75rem;
-    color: #ff4400;
-    font-weight: 600;
+    font-size: 0.8rem;
+    color:#3e3e3e;
+    font-weight: 100;
     display: block;
     margin-bottom: 5px;
 }
@@ -426,14 +529,18 @@ body {
 .company,
 .university,
 .address {
+    font-family: "Montserrat", sans-serif;
     font-size: 0.75rem;
-    color: #666;
+    color: #3e3e3e;
+    letter-spacing: 3px;
     margin-bottom: 8px;
+    clear: both; // <-- ДОДАНО
 }
 
 .description {
-    font-size: 0.75rem;
-    color: #666;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    color: #3e3e3e;
     line-height: 1.5;
 }
 
@@ -485,11 +592,11 @@ body {
 }
 
 .progress-bar {
-    width: 100%;
+    width: 80%;
     height: 4px;
     background-color: #e8e8e8;
     border-radius: 2px;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
 }
 
@@ -498,6 +605,26 @@ body {
     background-color: #ff4400;
     border-radius: 2px;
     transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    
+    /* Розміщуємо елемент в кінці (right: 0)
+      і зсуваємо його вправо на половину його власної ширини (-2px),
+      щоб він був ідеально по центру кінця лінії.
+    */
+    right: -2px; 
+    
+    transform: translateY(-50%); /* Для вертикального центрування */
+    
+    width: 4px;         /* Ширина "ручки" */
+    height: 10px;       /* Висота "ручки" (вища за саму лінію) */
+    background-color: #ff4400; /* Той самий помаранчевий колір */
+    border-radius: 2px; /* Легке заокруглення */
 }
 
 .languages-grid {
