@@ -345,17 +345,16 @@ body {
 .column .section-header:has(.fa-briefcase) .section-title::after,
 .column .section-header:has(.fa-trophy) .section-title::after {
     content: '';
-    display: block; /* Перебиваємо 'display: none' з оригінального стилю */
+    display: block; 
     position: absolute;
-    background-color: #ff4400; /* Помаранчевий колір лінії */
-    height: 3px;               /* Товщина лінії */
-    width: 900px;             /* Робимо лінію дуже довгою */
+    background-color: #ff4400; 
+    height: 3px;               
+    width: 900px;             
     
-    /* Позиціонуємо вертикально по центру заголовка */
     top: 50%;
     transform: translateY(-50%);
     
-    /* Починаємо лінію через 10px після кінця тексту заголовка */
+   
     left: calc(100% + 40px);
 }
 
@@ -384,6 +383,15 @@ body {
     z-index: 2;
 }
 
+.column .section-header:has(.fa-trophy) {
+    margin-bottom: 50px;
+}
+
+.award-item:last-of-type {
+    margin-bottom: 50px; 
+}
+
+
 .reference-item::after {
     display: none;
 }
@@ -392,93 +400,85 @@ body {
     display: none;
 }
 
-/* --- Зміни для WORK EXPERIENCE (Розміщуємо дати біля заголовків) --- */
 
-/* 1. Змушуємо заголовок "обтікати" зліва */
 .experience-item h3 {
     float: left;
-    margin-bottom: 0; /* Прибираємо відступ знизу, щоб дата піднялася */
+    margin-bottom: 0; 
 }
 
-/* 2. Змушуємо дату "обтікати" справа */
+
 .experience-item .date {
     float: left;
-    display: inline-block; /* Перебиваємо 'display: block' із загального стилю */
+    display: inline-block; 
     margin-bottom: 5px; 
-    margin-left: 8px;   /* Залишаємо відступ знизу, як і був */
+    margin-left: 8px;   
 }
 
-/* 3. Змушуємо назву компанії початися з нового рядка, "очистивши" обтікання */
+
 .experience-item .company {
     clear: both;
 }
-/* --- Кінець змін --- */
 
-/* === ОНОВЛЕНИЙ БЛОК для EDUCATION та AWARDS (Виправлення порядку) === */
-/* Будь ласка, ЗАМІНІТЬ попередні правила для h3/date на ЦІ правила. */
-
-/* 1. Перетворюємо самі елементи на flex-контейнери */
 .education-item,
 .award-item {
     display: flex;
-    flex-wrap: wrap;       // Дозволяє елементам переноситись на новий рядок
-    align-items: baseline; // Вирівнюємо h3 та дату по базовій лінії
+    flex-wrap: wrap;       
+    align-items: baseline; 
 }
 
-/* 2. Прибираємо 'clear: both' з .university/.address, оскільки
-      ми більше не використовуємо 'float' для цих секцій. */
+
 .education-item .university,
 .education-item .address,
 .award-item .address {
     clear: none; 
 }
 
-/* 3. Встановлюємо візуальний порядок (date = 2) */
+
 .education-item .date,
 .award-item .date {
     color: black;
     letter-spacing: 0;
-    order: 2;           // <--- Візуально буде другим
-    font-weight: 800;   // Робимо жирним
-    margin-left: 8px;   // Відступ від заголовка
+    order: 2;           
+    font-weight: 800;   
+    margin-left: 8px;   
     
-    /* Прибираємо float, якщо він був */
+   
     float: none;
     display: inline;
     line-height: 1.2;
     margin-bottom: 5px;
 }
 
-/* 4. Встановлюємо візуальний порядок (h3 = 1) */
+
 .education-item h3,
 .award-item h3 {
-    order: 1;           // <--- Візуально буде першим
+    order: 1;           
     
-    /* Прибираємо float, якщо він був */
+
     float: none;
     margin-bottom: 0;
 }
 
-/* 5. Змушуємо наступні елементи переноситись на новий рядок */
+
 .education-item .university,
 .education-item .address,
-.award-item .address { /* (або .award-item .company тощо) */
-    order: 3;           // <--- Візуально буде третім
-    width: 100%;        // <--- Змушує елемент "впасти" на новий рядок
-    margin-top: 5px;    // Додаємо невеликий відступ зверху
+.award-item .address { 
+    order: 3;           
+    width: 100%;       
+    margin-top: 5px;    
 }
 
-/* 6. Опис (description) також має йти в кінці */
+
 .education-item .description,
 .award-item .description {
-    order: 4;           // <--- Візуально буде останнім
+    order: 4;           
     width: 100%;
 }
-/* --- Кінець оновленого блоку --- */
 
-.experience-item::after,
-.education-item::after,
-.award-item::after,
+
+ .active::after,
+.active::after,
+ .active::after,
 .reference-item::after {
     content: '';
     position: absolute;
@@ -490,11 +490,9 @@ body {
     z-index: 1;
 }
 
-.experience-item:last-of-type::after,
-.education-item:last-of-type::after,
-.award-item:last-of-type::after,
-.reference-item:last-of-type::after {
-    display: none;
+.column {
+    display: grid;
+    grid-template-rows: 480px 1fr;
 }
 
 .experience-item:last-of-type,
@@ -613,18 +611,14 @@ body {
     position: absolute;
     top: 50%;
     
-    /* Розміщуємо елемент в кінці (right: 0)
-      і зсуваємо його вправо на половину його власної ширини (-2px),
-      щоб він був ідеально по центру кінця лінії.
-    */
     right: -2px; 
     
-    transform: translateY(-50%); /* Для вертикального центрування */
+    transform: translateY(-50%); 
     
-    width: 4px;         /* Ширина "ручки" */
-    height: 10px;       /* Висота "ручки" (вища за саму лінію) */
-    background-color: #ff4400; /* Той самий помаранчевий колір */
-    border-radius: 2px; /* Легке заокруглення */
+    width: 4px;         
+    height: 10px;       
+    background-color: #ff4400; 
+    border-radius: 2px; 
 }
 
 .languages-grid {
@@ -692,7 +686,6 @@ body {
 }
 
 
-/* --- ОСЬ ТУТ ЗМІНИ --- */
 .column .section-header {
     display: inline-flex;
     align-items: center;
@@ -703,25 +696,22 @@ body {
     position: relative;
     margin-top: 25px;
 
-    // Це перший заголовок у колонці
     &:first-child {
         margin-top: 0;
     }
 
-    // Цей селектор :has() знаходить .section-header,
-    // який містить .fa-trophy (тобто, ТІЛЬКИ "AWARDS")
+    
     &:has(.fa-trophy) {
         
-        // 1. "правіше неї змісти" (додаємо відступ, як у елементів)
+        
         margin-left: 20px; 
         
-        // 2. "додай... квадрат помаранчевий"
-        // (позиціонуємо його в новому просторі, створеному margin-left)
+        
         &::before {
             content: '';
             position: absolute;
-            left: -20px; // Поміщаємо зліва від таблетки
-            top: 15px;    // Налаштовуємо вертикальне положення
+            left: -20px;
+            top: 15px;   
             width: 8px;
             height: 8px;
             background-color: #ff4400;
@@ -729,20 +719,20 @@ body {
             z-index: 2;
         }
 
-        // 3. "і сіру лінію"
+    
         &::after {
             content: '';
             position: absolute;
-            left: -17px; // Центруємо лінію відносно квадрата ( -12px + 2.8px )
+            left: -17px; 
             top: 16px; 
-            bottom: -25px;
+            bottom: -55px;
             width: 2px;
             background-color: #e8e8e8;
             z-index: 1;
         }
     }
 }
-/* --- КІНЕЦЬ ЗМІН --- */
+
 
 
 @media (max-width: 992px) {
