@@ -21,13 +21,14 @@ function html() {
     .pipe(browserSync.stream());
 }
 
+
 // SCSS
 function styles() {
-  return src("src/app/scss/**/*.scss")
+  return src("src/app/scss/main.scss") // ЗМІНА 1: Вказуємо Gulp компілювати тільки main.scss
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
-    .pipe(cssnano())
-    .pipe(rename({ suffix: ".min" }))
+    .pipe(cssnano()) // Мініфікує CSS
+    .pipe(rename("index.min.css")) // ЗМІНА 2: Жорстко задаємо ім'я файлу
     .pipe(sourcemaps.write("."))
     .pipe(dest("dist/css"))
     .pipe(browserSync.stream());

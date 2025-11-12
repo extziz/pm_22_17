@@ -1,0 +1,13 @@
+// 1. Утиліти (змінні, міксіни, плейсхолдери)
+@use 'placeholders';
+
+// 2. Базові стилі (глобальні, body, контейнер)
+@use '../components/base/base';
+
+// 3. Компоненти сторінки
+@use '../components/header/header';
+@use '../components/contact/contact';
+@use '../components/columns/columns';
+
+// 4. Адаптивність (завжди в кінці)
+@use 'responsive';
