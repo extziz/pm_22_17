@@ -24,6 +24,7 @@
     "sass": "^1.93.2"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "gulp-imagemin": "^9.1.0",
     "gulp-sharp-responsive": "^0.4.1",
     "sharp": "^0.34.4",
