@@ -9,5 +9,7 @@
 @use '../components/contact/contact';
 @use '../components/columns/columns';
 
+@use 'toggle';
+
 // 4. Адаптивність (завжди в кінці)
 @use 'responsive';
