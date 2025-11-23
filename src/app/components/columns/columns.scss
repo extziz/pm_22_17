@@ -1,7 +1,7 @@
 @use '../../scss/variables' as *;
 @use '../../scss/mixins' as *;
-@use 'variables' as *; // для кольорів, відступів і т.д.
-@use 'mixins' as *;    // для міксінів
+@use 'variables' as *; 
+@use 'mixins' as *;   
 @use 'placeholders';
 
 .three-column-section {
@@ -94,19 +94,12 @@
     }
 }
 
-// Timeline елементи (Experience, Education, Award, Reference)
+
 .experience-item,
 .education-item,
 .award-item,
 .reference-item {
     @extend %timeline-item;
-}
-
-.experience-item::before,
-.education-item::before,
-.award-item::before,
-.reference-item::before {
-    // Пусто, оскільки стилі вже в %timeline-item
 }
 
 .award-item:last-of-type {
@@ -127,7 +120,6 @@
 }
 
 .experience-item .date {
-    float: left;
     display: inline-block;
     margin-bottom: 5px;
     margin-left: 8px;
@@ -374,4 +366,94 @@
     font-size: $base-font-size * 0.75;
     font-weight: 100;
     color: $text-color-dark;
+}
+
+.card {
+    background: transparent !important;      
+    border: none !important;                 
+    border-radius: 0 !important;           
+    box-shadow: none !important;           
+    margin-bottom: 0px !important;           
+    padding: 0px !important;                 
+
+    .card-body {
+        padding: 0px !important;     
+        margin-left: 20px         
+    }
+
+    .card-title {
+        @extend %timeline-item-heading;    
+        margin-bottom: 0px !important;
+    }
+
+    .card-subtitle {
+        @extend %timeline-item-subheading;  
+        margin-bottom: 8px !important;
+    }
+
+    .card-text {
+        font-family: $font-primary;         
+        font-size: $base-font-size * 0.8;
+        color: $text-color-light;
+        line-height: 1.5;
+        margin-bottom: 50px !important;
+    }
+}
+
+.progress-bar-custom {
+    background-color: $timeline-track-color !important;  
+    border-radius: 2px !important;                      
+    height: 4px !important;                             
+    overflow: visible !important;                       
+    width: calc(100% - 20%) !important;                
+    margin-bottom: 0 !important;
+
+    .progress-bar {
+        background-color: $primary-color !important;    
+        border-radius: 2px !important;
+        position: relative;
+
+        &::after {
+            
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -2px;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 10px;
+            background-color: $primary-color;
+            border-radius: 2px;
+        }
+    }
+}
+
+.badge {
+    background-color: transparent !important;   
+    color: $text-color-light !important;       
+    font-size: $base-font-size * 0.8 !important;
+    font-weight: 100 !important;               
+    padding: 0 !important;                     
+    border-radius: 0 !important;               
+    letter-spacing: 0 !important;
+
+    &.date {
+        color: $text-color-dark !important;    
+        letter-spacing: 0 !important;
+        font-weight: 800 !important;           
+    }
+}
+
+.list-group {
+    padding: 0 !important;                    
+    margin-left: 10px !important;                      
+    border: none !important;                   
+    background: transparent !important;       
+
+    .list-group-item {
+        background: transparent !important;    
+        border: none !important;               
+        padding: 0 !important;                 
+        margin-bottom: 35px !important;                  
+    }
 }
