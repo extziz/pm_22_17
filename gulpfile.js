@@ -24,11 +24,11 @@ function html() {
 
 // SCSS
 function styles() {
-  return src("src/app/scss/main.scss") // ЗМІНА 1: Вказуємо Gulp компілювати тільки main.scss
+  return src("src/app/scss/main.scss") 
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
-    .pipe(cssnano()) // Мініфікує CSS
-    .pipe(rename("index.min.css")) // ЗМІНА 2: Жорстко задаємо ім'я файлу
+    .pipe(cssnano()) 
+    .pipe(rename("index.min.css")) 
     .pipe(sourcemaps.write("."))
     .pipe(dest("dist/css"))
     .pipe(browserSync.stream());
@@ -40,6 +40,13 @@ function scripts() {
     .pipe(concat("app.js"))
     .pipe(uglify())
     .pipe(dest("dist/js"))
+    .pipe(browserSync.stream());
+}
+
+// JSON
+function json() {
+  return src("src/app/**/*.json")
+    .pipe(dest("dist"))
     .pipe(browserSync.stream());
 }
 
@@ -75,6 +82,7 @@ function watcher() {
   watch("src/app/*.html", html);
   watch("src/app/js/**/*.js", scripts);
   watch("src/app/imgs/**/*", images);
+  watch("src/app/**/*.json", json);
 }
 
 // Export tasks

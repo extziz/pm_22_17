@@ -1,84 +1,189 @@
 /**
- * Resume JavaScript Functions
- * ============================
- * 1. Підстановка імені користувача
- * 2. Toggle видимості блоків зі стрілками
- * 3. Генерація розмітки з масиву даних
+ * Resume JavaScript Functions with AJAX Data Loading
+ * ===================================================
+ * 1. Завантаження даних з data.json через Fetch API
+ * 2. Підстановка імені користувача (firstName + lastName)
+ * 3. Toggle видимості блоків зі стрілками
+ * 4. Генерація розмітки з масиву даних
  */
 
 // ============================================
-// ЗАВДАННЯ 1: Підстановка імені користувача
+// ГЛОБАЛЬНІ ЗМІННІ
+// ============================================
+
+let appData = null; // Глобальне сховище для завантажених даних
+
+// ============================================
+// ЗАВДАННЯ 1: AJAX Завантаження даних з JSON
 // ============================================
 
 /**
- * Заздалегідь визначені дані користувача (ОРИГІНАЛЬНІ)
+ * Завантаження даних з data.json через Fetch API
+ * @returns {Promise<Object>} - Promise з даними або помилкою
  */
-const USER_DATA = {
-    fullName: "John Harrie",
-    profession: "Graphic Designer",
-    email: "john@yourwebsite.com",
-    phone: "+4-756-822-5156"
-};
+async function loadDataFromJSON() {
+    const dataUrl = 'data.json'; // Шлях до JSON файлу
+    
+    try {
+        console.log('🔄 Завантаження даних з data.json...');
+        
+        // Виконуємо запит через Fetch API
+        const response = await fetch(dataUrl);
+        
+        // Перевіряємо статус відповіді
+        if (!response.ok) {
+            throw new Error(`HTTP помилка! Статус: ${response.status}`);
+        }
+        
+        // Перетворюємо відповідь на JSON об'єкт
+        const data = await response.json();
+        
+        console.log('✅ Дані успішно завантажено:', data);
+        return data;
+        
+    } catch (error) {
+        // Обробка помилок
+        console.error('❌ Помилка завантаження даних:', error);
+        
+        // Відображення службового повідомлення користувачу
+        displayErrorMessage(`Помилка завантаження даних: ${error.message}`);
+        
+        throw error; // Пробрасуємо помилку далі
+    }
+}
 
 /**
- * Функція для підстановки імені користувача в елемент за id
- * @param {string} elementId - ID елемента для вставки імені
- * @param {string} name - Ім'я для вставки (опціонально, за замовчуванням USER_DATA.fullName)
+ * Альтернативна реалізація через XMLHttpRequest (для порівняння)
+ * @returns {Promise<Object>}
  */
-function setUserName(elementId, name = USER_DATA.fullName) {
+function loadDataWithXHR() {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        
+        xhr.open('GET', 'data.json', true);
+        
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log('✅ Дані завантажено через XHR:', data);
+                    resolve(data);
+                } catch (error) {
+                    reject(new Error('Помилка парсингу JSON'));
+                }
+            } else {
+                reject(new Error(`HTTP помилка! Статус: ${xhr.status}`));
+            }
+        };
+        
+        xhr.onerror = function() {
+            reject(new Error('Помилка мережі'));
+        };
+        
+        xhr.send();
+    });
+}
+
+/**
+ * Відображення повідомлення про помилку
+ * @param {string} message - Текст повідомлення
+ */
+function displayErrorMessage(message) {
+    // Створюємо елемент повідомлення
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #f44336;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 400px;
+        font-size: 14px;
+        animation: slideIn 0.3s ease;
+    `;
+    errorDiv.innerHTML = `
+        <strong>⚠️ Помилка:</strong> ${escapeHTML(message)}
+        <br><small>Перевірте консоль для деталей</small>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Автоматично видаляємо через 5 секунд
+    setTimeout(() => {
+        errorDiv.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => errorDiv.remove(), 300);
+    }, 5000);
+}
+
+
+// ============================================
+// ЗАВДАННЯ 2: Підстановка імені користувача
+// ============================================
+
+/**
+ * Функція для підстановки повного імені (firstName + lastName)
+ * @param {string} elementId - ID елемента для вставки
+ * @param {Object} personalData - Об'єкт з персональними даними
+ */
+function setUserFullName(elementId, personalData) {
     const element = document.getElementById(elementId);
     
-    if (element) {
+    if (element && personalData) {
+        // Формуємо повне ім'я з firstName та lastName
+        const fullName = `${personalData.firstName} ${personalData.lastName}`;
+        
         // Використовуємо textContent (без HTML) для безпеки
-        element.textContent = name;
-        console.log(`✅ Ім'я "${name}" встановлено в елемент #${elementId}`);
+        element.textContent = fullName;
+        console.log(`✅ Повне ім'я "${fullName}" встановлено в елемент #${elementId}`);
     } else {
-        console.warn(`⚠️ Елемент з id="${elementId}" не знайдено`);
+        console.warn(`⚠️ Елемент з id="${elementId}" не знайдено або дані відсутні`);
     }
 }
 
 /**
  * Функція для підстановки професії користувача
  * @param {string} elementId - ID елемента для вставки
+ * @param {Object} personalData - Об'єкт з персональними даними
  */
-function setUserProfession(elementId) {
+function setUserProfession(elementId, personalData) {
     const element = document.getElementById(elementId);
     
-    if (element) {
-        element.textContent = USER_DATA.profession;
-        console.log(`✅ Професія встановлена в елемент #${elementId}`);
+    if (element && personalData && personalData.profession) {
+        element.textContent = personalData.profession;
+        console.log(`✅ Професія "${personalData.profession}" встановлена в елемент #${elementId}`);
     }
 }
 
 
 // ============================================
-// ЗАВДАННЯ 2: Toggle видимості блоків зі стрілками
+// ЗАВДАННЯ 3: Toggle видимості блоків зі стрілками
 // ============================================
 
 /**
  * CSS класи для toggle функціоналу
  */
 const TOGGLE_CLASSES = {
-    hidden: 'content-hidden',      // Клас для прихованого контенту
-    rotated: 'arrow-rotated',      // Клас для повернутої стрілки
-    arrow: 'toggle-arrow'          // Клас для стрілки
+    hidden: 'content-hidden',
+    rotated: 'arrow-rotated',
+    arrow: 'toggle-arrow'
 };
 
 /**
  * Ініціалізація toggle стрілок для всіх секцій
- * Додає стрілки до заголовків секцій та прив'язує обробники
  */
 function initToggleArrows() {
-    // Знаходимо всі заголовки секцій у колонках
     const sectionHeaders = document.querySelectorAll('.column .section-header');
     
     sectionHeaders.forEach((header, index) => {
-        // Перевіряємо чи стрілка вже існує
         if (header.querySelector(`.${TOGGLE_CLASSES.arrow}`)) {
             return;
         }
         
-        // Створюємо елемент стрілки
         const arrow = document.createElement('i');
         arrow.className = `fas fa-chevron-down ${TOGGLE_CLASSES.arrow}`;
         arrow.setAttribute('role', 'button');
@@ -86,19 +191,15 @@ function initToggleArrows() {
         arrow.setAttribute('aria-label', 'Згорнути/розгорнути секцію');
         arrow.setAttribute('tabindex', '0');
         
-        // Додаємо стрілку до заголовка
         header.appendChild(arrow);
         
-        // Знаходимо контент секції (наступні елементи після header)
         const content = getNextSiblingContent(header);
         
-        // Прив'язуємо обробник click
         arrow.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleSection(arrow, content);
         });
         
-        // Додаємо підтримку клавіатури (Enter/Space)
         arrow.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -106,7 +207,6 @@ function initToggleArrows() {
             }
         });
         
-        // Робимо весь header клікабельним
         header.style.cursor = 'pointer';
         header.addEventListener('click', () => {
             toggleSection(arrow, content);
@@ -117,15 +217,12 @@ function initToggleArrows() {
 }
 
 /**
- * Отримує контент секції (всі елементи між поточним header і наступним)
- * @param {HTMLElement} header - Елемент заголовка секції
- * @returns {HTMLElement[]} - Масив елементів контенту
+ * Отримує контент секції
  */
 function getNextSiblingContent(header) {
     const content = [];
     let sibling = header.nextElementSibling;
     
-    // Збираємо всі елементи до наступного section-header або кінця контейнера
     while (sibling && !sibling.classList.contains('section-header')) {
         content.push(sibling);
         sibling = sibling.nextElementSibling;
@@ -136,19 +233,13 @@ function getNextSiblingContent(header) {
 
 /**
  * Перемикає видимість секції
- * @param {HTMLElement} arrow - Елемент стрілки
- * @param {HTMLElement[]} content - Масив елементів контенту для toggle
  */
 function toggleSection(arrow, content) {
     const isHidden = arrow.classList.contains(TOGGLE_CLASSES.rotated);
     
-    // Перемикаємо клас обертання стрілки
     arrow.classList.toggle(TOGGLE_CLASSES.rotated);
-    
-    // Оновлюємо ARIA атрибут
     arrow.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     
-    // Перемикаємо видимість контенту
     content.forEach(element => {
         element.classList.toggle(TOGGLE_CLASSES.hidden);
     });
@@ -156,107 +247,13 @@ function toggleSection(arrow, content) {
     console.log(`🔄 Секція ${isHidden ? 'розгорнута' : 'згорнута'}`);
 }
 
-/**
- * Програмне згортання/розгортання секції за індексом
- * @param {number} sectionIndex - Індекс секції (починаючи з 0)
- * @param {boolean} show - true = показати, false = приховати
- */
-function toggleSectionByIndex(sectionIndex, show) {
-    const arrows = document.querySelectorAll(`.${TOGGLE_CLASSES.arrow}`);
-    
-    if (arrows[sectionIndex]) {
-        const arrow = arrows[sectionIndex];
-        const header = arrow.closest('.section-header');
-        const content = getNextSiblingContent(header);
-        const isCurrentlyHidden = arrow.classList.contains(TOGGLE_CLASSES.rotated);
-        
-        // Тільки перемикаємо якщо стан відрізняється
-        if ((show && isCurrentlyHidden) || (!show && !isCurrentlyHidden)) {
-            toggleSection(arrow, content);
-        }
-    }
-}
-
 
 // ============================================
-// ЗАВДАННЯ 3: Генерація розмітки з масиву даних
+// ЗАВДАННЯ 4: Генерація розмітки з даних JSON
 // ============================================
 
 /**
- * Масив даних про досвід роботи (ОРИГІНАЛЬНІ ДАНІ)
- */
-const workExperienceData = [
-    {
-        id: 1,
-        title: "WEB DESIGNER",
-        date: "2018 - Present",
-        company: "Company Name / Location",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum",
-        isActive: true
-    },
-    {
-        id: 2,
-        title: "GRAPHIC DESIGNER",
-        date: "2015 - 2018",
-        company: "Company Name / Location",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum",
-        isActive: true
-    },
-    {
-        id: 3,
-        title: "MARKETING MANAGER",
-        date: "2010 - 2015",
-        company: "Company Name / Location",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum",
-        isActive: false
-    }
-];
-
-/**
- * Масив даних про навички (ОРИГІНАЛЬНІ ДАНІ)
- */
-const skillsData = [
-    { name: "Microsoft Word", level: 90 },
-    { name: "Web Designing", level: 80 },
-    { name: "Graphic Designing", level: 85 },
-    { name: "Afinity Designer", level: 70 },
-    { name: "MS Powerpoint", level: 75 }
-];
-
-/**
- * Масив даних про освіту (ОРИГІНАЛЬНІ ДАНІ)
- */
-const educationData = [
-    {
-        id: 1,
-        title: "MASTER OF CREATIVE ARTS",
-        university: "University Name",
-        date: "2018 - Present",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod facilisis.",
-        isActive: true
-    },
-    {
-        id: 2,
-        title: "MASTER OF DESIGN",
-        university: "University Name",
-        date: "2015 - 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod facilisis.",
-        isActive: true
-    },
-    {
-        id: 3,
-        title: "MARKETING OFFICER",
-        university: "University Name",
-        date: "2010 - 2012",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod facilisis.",
-        isActive: false
-    }
-];
-
-/**
- * Генерує HTML розмітку для одного елемента досвіду роботи
- * @param {Object} item - Об'єкт з даними про роботу
- * @returns {string} - HTML рядок
+ * Генерує HTML для досвіду роботи
  */
 function generateWorkItemHTML(item) {
     const activeClass = item.isActive ? 'active' : '';
@@ -274,9 +271,7 @@ function generateWorkItemHTML(item) {
 }
 
 /**
- * Генерує HTML розмітку для одного елемента навички
- * @param {Object} skill - Об'єкт з даними про навичку
- * @returns {string} - HTML рядок
+ * Генерує HTML для навичок
  */
 function generateSkillItemHTML(skill) {
     return `
@@ -295,9 +290,7 @@ function generateSkillItemHTML(skill) {
 }
 
 /**
- * Генерує HTML розмітку для одного елемента освіти
- * @param {Object} item - Об'єкт з даними про освіту
- * @returns {string} - HTML рядок
+ * Генерує HTML для освіти
  */
 function generateEducationItemHTML(item) {
     const activeClass = item.isActive ? 'active' : '';
@@ -317,10 +310,7 @@ function generateEducationItemHTML(item) {
 }
 
 /**
- * Головна функція для генерації та вставки розмітки
- * @param {string} containerId - ID контейнера для вставки
- * @param {Array} dataArray - Масив даних
- * @param {Function} generateItemFn - Функція генерації HTML для одного елемента
+ * Головна функція для рендерингу даних
  */
 function renderDataToContainer(containerId, dataArray, generateItemFn) {
     const container = document.getElementById(containerId);
@@ -333,6 +323,11 @@ function renderDataToContainer(containerId, dataArray, generateItemFn) {
     // Очищаємо вміст контейнера перед вставкою
     container.innerHTML = '';
     
+    if (!dataArray || dataArray.length === 0) {
+        container.innerHTML = '<p class="no-data">Дані відсутні</p>';
+        return;
+    }
+    
     // Генеруємо розмітку для кожного елемента
     const html = dataArray.map(item => generateItemFn(item)).join('');
     
@@ -343,33 +338,36 @@ function renderDataToContainer(containerId, dataArray, generateItemFn) {
 }
 
 /**
- * Функція для рендеру досвіду роботи
- * @param {string} containerId - ID контейнера (за замовчуванням 'work-experience-container')
+ * Рендеринг всіх секцій з даних JSON
  */
-function renderWorkExperience(containerId = 'work-experience-container') {
-    renderDataToContainer(containerId, workExperienceData, generateWorkItemHTML);
-}
-
-/**
- * Функція для рендеру навичок
- * @param {string} containerId - ID контейнера (за замовчуванням 'skills-container')
- */
-function renderSkills(containerId = 'skills-container') {
-    renderDataToContainer(containerId, skillsData, generateSkillItemHTML);
-}
-
-/**
- * Функція для рендеру освіти
- * @param {string} containerId - ID контейнера (за замовчуванням 'education-container')
- */
-function renderEducation(containerId = 'education-container') {
-    renderDataToContainer(containerId, educationData, generateEducationItemHTML);
+function renderAllSections(data) {
+    if (!data) {
+        console.error('❌ Дані відсутні для рендерингу');
+        return;
+    }
+    
+    // Підстановка імені (firstName + lastName)
+    if (data.personalData) {
+        setUserFullName('personName', data.personalData);
+        setUserProfession('personProfession', data.personalData);
+    }
+    
+    // Генерація секцій з масивів
+    if (data.jobs) {
+        renderDataToContainer('work-experience-container', data.jobs, generateWorkItemHTML);
+    }
+    
+    if (data.skills) {
+        renderDataToContainer('skills-container', data.skills, generateSkillItemHTML);
+    }
+    
+    if (data.education) {
+        renderDataToContainer('education-container', data.education, generateEducationItemHTML);
+    }
 }
 
 /**
  * Утиліта для екранування HTML (захист від XSS)
- * @param {string} text - Текст для екранування
- * @returns {string} - Безпечний текст
  */
 function escapeHTML(text) {
     const div = document.createElement('div');
@@ -382,45 +380,26 @@ function escapeHTML(text) {
 // ІНІЦІАЛІЗАЦІЯ після завантаження DOM
 // ============================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Resume JS завантажено');
     
-    // ЗАВДАННЯ 1: Підстановка імені користувача
-    setUserName('personName');
-    setUserProfession('personProfession');
-    
-    // ЗАВДАННЯ 2: Ініціалізація toggle стрілок
-    initToggleArrows();
-    
-    // ЗАВДАННЯ 3: Генерація контенту з масивів даних
-    renderWorkExperience();
-    renderSkills();
-    renderEducation();
-    
-    console.log('✅ Всі функції ініціалізовано');
+    try {
+        // ЗАВДАННЯ 1: Завантаження даних з JSON через AJAX
+        appData = await loadDataFromJSON();
+        
+        // ЗАВДАННЯ 2 і 3: Рендеринг даних з JSON (замість захардкоджених)
+        renderAllSections(appData);
+        
+        // Toggle стрілок (після рендерингу контенту)
+        initToggleArrows();
+        
+        console.log('✅ Всі функції ініціалізовано');
+        
+    } catch (error) {
+        console.error('❌ Критична помилка ініціалізації:', error);
+        
+        // Fallback: показуємо повідомлення користувачу
+        displayErrorMessage('Не вдалося завантажити дані. Перезавантажте сторінку.');
+    }
 });
 
-
-// ============================================
-// ЕКСПОРТ ДЛЯ ТЕСТУВАННЯ (опціонально)
-// ============================================
-
-// Якщо потрібно використовувати функції глобально
-window.ResumeApp = {
-    // Завдання 1
-    setUserName,
-    setUserProfession,
-    USER_DATA,
-    
-    // Завдання 2
-    initToggleArrows,
-    toggleSectionByIndex,
-    
-    // Завдання 3
-    renderWorkExperience,
-    renderSkills,
-    renderEducation,
-    workExperienceData,
-    skillsData,
-    educationData
-};
